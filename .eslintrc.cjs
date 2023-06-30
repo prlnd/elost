@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ['react-refresh', 'prettier'],
   rules: {
+    '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     'react-refresh/only-export-components': 'warn',
   },
   overrides: [

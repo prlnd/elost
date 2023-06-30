@@ -1,5 +1,16 @@
-function App() {
-  return <h1>Elost</h1>;
-}
+import { ContactProvider } from './contexts/ContactContext';
+import { UsernameContext } from './contexts/UsernameContext';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import { useContext } from 'react';
 
-export default App;
+export default function App() {
+  const username = useContext(UsernameContext);
+  return username ? (
+    <ContactProvider>
+      <Home />
+    </ContactProvider>
+  ) : (
+    <Login />
+  );
+}

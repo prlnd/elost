@@ -19,8 +19,8 @@ export async function getContact(newKey: string): Promise<UserContact | null> {
   }
 
   const to: any = gun.user(newKey);
-  const who = (await to.then()) || {};
-  if (who.alias) {
+  const who = await to.then();
+  if (who?.alias) {
     const alias: string = who.alias;
     return {
       name: alias,

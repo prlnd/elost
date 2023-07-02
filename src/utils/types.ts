@@ -16,3 +16,10 @@ export type Message = {
   image: string;
   timestamp: string;
 };
+
+export type ExtensionInfo = {
+  name: string;
+  author: string;
+  downloads: number;
+  id: string;
+};

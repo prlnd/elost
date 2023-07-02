@@ -5,8 +5,9 @@ import Login from './pages/Login';
 import { useContext } from 'react';
 
 export default function App() {
-  const username = useContext(UsernameContext);
-  return username ? (
+  const isLoggedIn = !!useContext(UsernameContext);
+
+  return isLoggedIn ? (
     <ContactProvider>
       <Home />
     </ContactProvider>

@@ -4,4 +4,4 @@ import 'gun/axe';
 
 export const gun = new GUN();
 
-export const user: any = gun.user();
+export const user: any = gun.user().recall({ sessionStorage: true });

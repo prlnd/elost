@@ -4,6 +4,7 @@ import { gun } from '../user';
 import GUN from 'gun';
 import { ContactContext } from '../contexts/ContactContext';
 import { FetchedMessage, Message } from '../utils/types';
+import { getAvatar } from '../utils/getAvatar';
 
 export function useMessages() {
   const username = useContext(UsernameContext);
@@ -15,23 +16,23 @@ export function useMessages() {
       .get(contact.publicKey)
       .map()
       .once(async data => {
-        if (data) {
-          // TODO: This is a temporary hack to get the key for end-to-end encryption.
-          const key = '#foo';
+        if (!data) {
+          return;
+        }
+        const key = '#secret';
 
-          const message = {
-            who: (await gun.user(data).get('alias')) as any,
-            what: String(await Gun.SEA.decrypt(data.what, key)),
-            when: (GUN.state as any).is(data, 'what'),
-          };
+        const message = {
+          who: (await gun.user(data).get('alias')) as any,
+          what: String(await Gun.SEA.decrypt(data.what, key)),
+          when: (GUN.state as any).is(data, 'what'),
+        };
 
-          if (message.what) {
-            setFetchedMessages(prevMessages => {
-              const nextMessages = prevMessages.slice(-100);
-              nextMessages.push(message);
-              return nextMessages.sort((a, b) => a.when - b.when);
-            });
-          }
+        if (message.what) {
+          setFetchedMessages(prevMessages => {
+            const nextMessages = prevMessages.slice(-100);
+            nextMessages.push(message);
+            return nextMessages.sort((a, b) => a.when - b.when);
+          });
         }
       });
   }, [contact.publicKey]);
@@ -39,7 +40,7 @@ export function useMessages() {
   return fetchedMessages.map<Message>(message => ({
     status: message.who === username ? 'sent' : 'received',
     content: message.what,
-    image: `https://avatars.dicebear.com/api/initials/${message.who}.svg`,
+    image: getAvatar(message.who),
     timestamp: new Date(message.when).toLocaleTimeString(),
   }));
 }

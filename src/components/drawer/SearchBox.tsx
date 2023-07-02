@@ -24,7 +24,7 @@ export default function SearchBox() {
             <input
               className="w-full rounded-full border border-gray-800 bg-gray-800 py-2 pl-10 pr-6 text-gray-200 transition duration-300 ease-in focus:border-gray-700 focus:bg-gray-900 focus:shadow-md focus:outline-none"
               type="text"
-              placeholder="Search Link"
+              placeholder="Search for a link or user"
               value={newKey}
               onChange={e => setNewKey(e.target.value)}
             />

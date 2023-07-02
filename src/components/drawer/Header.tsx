@@ -1,8 +1,13 @@
 import { useContext } from 'react';
 import { user } from '../../user';
-import { UsernameSetterContext } from '../../contexts/UsernameContext';
+import {
+  UsernameContext,
+  UsernameSetterContext,
+} from '../../contexts/UsernameContext';
+import { getAvatar } from '../../utils/getAvatar';
 
 export default function Header() {
+  const username = useContext(UsernameContext);
   const setUsername = useContext(UsernameSetterContext);
 
   function handleSignOut() {
@@ -18,20 +23,32 @@ export default function Header() {
       >
         <img
           className="h-full w-full rounded-full object-cover"
-          alt="Vite logo"
-          src="/vite.svg"
-          onClick={() => alert(user.pair().pub)}
+          src={getAvatar(username)}
+          alt={`${username}'s avatar`}
+          onClick={() => alert(`Your publick key:\n${user.pair().pub}`)}
         />
       </div>
       <p className="text-md hidden font-bold group-hover:block md:block">
-        Messenger
+        Elost
       </p>
       <button
         className="block h-10 w-10 rounded-full bg-gray-800 p-2 hover:bg-gray-700 group-hover:block md:block"
         onClick={handleSignOut}
       >
-        <svg viewBox="0 0 24 24" className="h-full w-full fill-current">
-          <path d="M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
         </svg>
       </button>
     </div>

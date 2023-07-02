@@ -28,7 +28,7 @@ export default function Login() {
         <div className="w-full divide-y divide-gray-200 rounded-lg bg-white shadow">
           <div className="px-5 py-7">
             <label className="block pb-1 text-sm font-semibold text-gray-600">
-              E-mail
+              Username
             </label>
             <input
               type="text"

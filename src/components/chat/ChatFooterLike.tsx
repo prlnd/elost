@@ -1,15 +1,19 @@
+import { useContext } from 'react';
 import { gun, user } from '../../user';
+import { ContactContext } from '../../contexts/ContactContext';
 
 export default function ChatFooterLike() {
+  const contact = useContext(ContactContext);
+
   return (
     <button
       type="button"
       className="mx-2 flex h-6 w-6 flex-shrink-0 text-blue-600 hover:text-blue-700 focus:outline-none"
       onClick={async () => {
-        const secret: any = await Gun.SEA.encrypt('👍', '#foo');
+        const secret: any = await Gun.SEA.encrypt('👍', '#secret');
         const encrypted = user.get('all').set({ what: secret });
         const index = new Date().toISOString();
-        gun.get('chat').get(index).put(encrypted);
+        gun.get(contact.publicKey).get(index).put(encrypted);
       }}
     >
       <svg viewBox="0 0 20 20" className="h-full w-full fill-current">
